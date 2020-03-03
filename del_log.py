@@ -124,7 +124,7 @@ def out(data):
 
 def process(Table, lnk = None):
     id = None
-    q = Table.select().dicts()
+    q = Table.select().order_by(Table.id.desc()).dicts()
     for i in xrange(0, len(q), 3):
         system('clear')
         for r in q[i:i+3]:
