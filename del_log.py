@@ -149,11 +149,24 @@ def process(Table, lnk = None):
             Journal.delete().where(lnk == id).execute()
         Table.delete().where(Table.id == id).execute()
 
+def deleteAll(Table, lnk = None):
+    if lnk:
+        Journal.delete().where(lnk.is_null(False)).execute()
+    Table.delete().execute()
+
 while True:
+    print('')
+    print('--- Look and delete 1 record')
     print('1. Locker password history')
     print('2. License history')
     print('3. Journal')
-    print('4. Exit')
+    print('')
+    print('--- Delete all')
+    print('4. Locker password history')
+    print('5. License history')
+    print('6. Journal')
+    print('')
+    print('7. Exit')
     ans = raw_input('Select: ')
     if ans == '1':
         process(PasswordsLog, Journal.affected_password_id)
@@ -161,5 +174,11 @@ while True:
         process(LicensesLog, Journal.affected_license_id)
     elif ans == '3':
         process(Journal)
-    elif ans == '4':
+    if ans == '4':
+        deleteAll(PasswordsLog, Journal.affected_password_id)
+    elif ans == '5':
+        deleteAll(LicensesLog, Journal.affected_license_id)
+    elif ans == '6':
+        deleteAll(Journal)
+    elif ans == '7':
         break
