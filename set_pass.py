@@ -3,6 +3,7 @@
 import hashlib
 import datetime
 import peewee as pw
+from __future__ import print_function
 
 database_proxy = pw.Proxy()
 
