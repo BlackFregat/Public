@@ -79,7 +79,7 @@ def sawe_pass():
     except Error as e:
         print("Error:", e)
     
-def restore_pass()
+def restore_pass():
     login = raw_input('Login: ')
     try
         with open(f"{login}.pass", "rt") as f:
