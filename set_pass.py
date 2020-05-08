@@ -82,7 +82,7 @@ def sawe_pass():
 def restore_pass():
     login = raw_input('Login: ')
     try:
-        with open(f"{login}.pass", "rt") as f:
+        with open("%s.pass" % login, "rt") as f:
             passw = f.read_line().strip()
         User.update(password = hash_pass(login, passw)).where(User.login == login).execute()
         print("Password restored from file %s.pass" % login)
