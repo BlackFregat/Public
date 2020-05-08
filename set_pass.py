@@ -91,7 +91,7 @@ def restore_pass():
     
 init_db()
 while True:
-    print('1. Set new passwor)
+    print('1. Set new password')
     print('2. Save existing password')
     print('3. Restore saved password')
     print('4. Exit')
