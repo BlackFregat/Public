@@ -69,16 +69,13 @@ def set_pass():
     passw = raw_input('Password: ')
     User.update(password = hash_pass(login, passw)).where(User.login == login).execute()
 
-def sawe_pass():
+def save_pass():
     login = raw_input('Login: ')
     passw = User.select(User.password).where(User.login == login).execute()
-    try:
-        with open("%s.pass" % login, "wt") as f:
-            for r in passw:
-                print(r, file = f)
-        print("Password saved into file %s.pass" % login)
-    except Error as e:
-        print("Error:", e)
+    with open("%s.pass" % login, "wt") as f:
+        for r in passw:
+            print(r, file = f)
+    print("Password saved into file %s.pass" % login)
     
 def restore_pass():
     login = raw_input('Login: ')
@@ -87,8 +84,8 @@ def restore_pass():
             passw = f.read_line().strip()
         User.update(password = hash_pass(login, passw)).where(User.login == login).execute()
         print("Password restored from file %s.pass" % login)
-    except Error as e:
-        print("Error:", e)
+    except FileNotFoundError as e:
+        print("Error: file %s.pass not found" % login)
     
 init_db()
 while True:
