@@ -62,8 +62,46 @@ class User(BaseModel):
     user_timestamp = pw.DateTimeField(default=datetime.datetime.now)
 
     is_deleted = pw.BooleanField(default=False)
+    
+def set_pass():
+    login = raw_input('Login: ')
+    passw = raw_input('Password: ')
+    User.update(password = hash_pass(login, passw)).where(User.login == login).execute()
 
+def sawe_pass():
+    login = raw_input('Login: ')
+    passw = User.select(User.password).where(User.login == login).execute()
+    try:
+        with open(f"{login}.pass", "wt") as f:
+            for r in passw:
+                print(r, file = f)
+        print(f"Password saved into file {login}.pass")
+    except Error as e:
+        print(f"Error: {e}")
+    
+def restore_pass()
+    login = raw_input('Login: ')
+    try
+        with open(f"{login}.pass", "rt") as f:
+            passw = f.read_line().strip()
+        User.update(password = hash_pass(login, passw)).where(User.login == login).execute()
+        print(f"Password restored from file {login}.pass")
+    except Error as e:
+        print(f"Error: {e}")
+    
 init_db()
-login = raw_input('Login: ')
-passw = raw_input('Password: ')
-User.update(password = hash_pass(login, passw)).where(User.login == login).execute()
+while True:
+    print('1. Set new passwor)
+    print('2. Save existing password')
+    print('3. Restore saved password')
+    print('4. Exit')
+    ans = raw_input('Select: ')
+    if ans == '1':
+        set_pass()
+    elif ans == '2':
+        save_pass()
+    elif ans == '3':
+        restore_pass()
+    elif ans == '4':
+        break
+
